@@ -1,0 +1,24 @@
+/* Empty. Add your own CSS if you like */
+.bar-stable .bar {
+
+    background-color: #0288D1 !important;
+    
+    border-color: #0277BD !important;
+}
+
+.bar.bar-stable .title{
+	color: white !important;
+	text-align: center !important;
+	left: 0px;
+}
+
+.padding {
+   padding: 0px !important; 
+}
+
+
+
+.bar-stable .button.button-clear{
+	color: white !important;
+}
+

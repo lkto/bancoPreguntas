@@ -1,0 +1,49 @@
+<ion-view view-title="Realizar encuesta">
+  <ion-content class="padding" delegate-handle="mainScroll" >
+  <div class="list">
+
+
+<div class="list card" id="msgfinal">
+
+
+  <div class="item item-body">
+    <img class="full-image" src="img/final.png">
+    <p>
+      Muchas gracias por responder este examen, espero le haya servido para prender nuevos conceptos acerca del tema que selecciono para resolver, esto a sido todo.
+    </p>
+  </div>
+
+</div>
+
+<div class="card" style="padding-right: 10px;
+    margin-top: 0px;
+    margin-bottom: 0px;" id="msginicial">
+  <div class="item item-text-wrap " >
+    Lea atentamente cada pregunta y marque la respuesta que considere correcta
+  </div>
+</div>
+<div ng-repeat="examen in examen">
+    
+    <div class="item item-text-wrap"  style="background-color:#0288D1 !important;color: white !important">
+    {{examen.pregunta}}
+   </div>
+
+
+    <ion-radio ng-repeat="item in examen.respuesta"
+                   ng-value="item.correcta"
+                   ng-model="data.respuesta"
+                   ng-click="respuestaChange(examen,item.id)"
+                   name="respuesta{{examen.id}}"
+                   id="{{item.idu}}"
+                 >
+          {{ item.name }}
+    </ion-radio>
+</div>
+</div>
+<button ng-click="aceptar()" class="button button-full button-positive" id="btnaceptar" >Aceptar</button>
+<button ng-click="continuar()" class="button button-full button-positive" id="btncontinuar" >Continuar</button>
+<button ng-click="terminar()" class="button button-full button-positive" id="btnterminar" >Terminar</button>
+
+
+  </ion-content>
+</ion-view>
