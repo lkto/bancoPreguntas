@@ -1,73 +1,9 @@
-angular.module('starter.controllers', [])
-
-.controller('DashCtrl', function($scope) {})
-
-.controller('ChatsCtrl', function($scope, Chats) {
-  // With the new view caching in Ionic, Controllers are only called
-  // when they are recreated or on app start, instead of every page change.
-  // To listen for when this page is active (for example, to refresh data),
-  // listen for the $ionicView.enter event:
-  //
-  //$scope.$on('$ionicView.enter', function(e) {
-  //});
-
-  $scope.chats = Chats.all();
-  $scope.remove = function(chat) {
-    Chats.remove(chat);
-  };
-})
-
-.controller('ChatDetailCtrl', function($scope, $stateParams, Chats) {
-  $scope.chat = Chats.get($stateParams.chatId);
-})
-
-.controller('AccountCtrl', function($scope) {
-  $scope.settings = {
-    enableFriends: true
-  };
-})
-
-.controller('CategoriasCtrl', function($scope,$location,$rootScope) {
-
-  $scope.aceptar= function () {
-
-    $rootScope.idC = document.getElementById("categoria").value;
-    //console.log($rootScope.idC);
-    $location.path( "tab/encuestas" );
-  }
-})
-
-
-
-.controller('EncuestasCtrl', function($scope,$rootScope,$location) {
- 
-  $scope.encuestas=[
-    {id:1, nombre: "Examen de gestion de redes"}
-  ];
-
-  $scope.verEncuesta = function(id){
-    console.log(id);
-    $rootScope.id = id;
-    $location.path( "tab/detalles" );
-  }
-
-})
-
-.controller('detallesCtrl', function($scope,$rootScope,$location) {
- 
-  $scope.continuar = function(){
-    $location.path( "tab/ver" );
-  }
-
-})
-.controller('VerCtrl', function($scope,$ionicScrollDelegate,$location) {
-
-c= 0;
-   document.getElementById("btncontinuar").style.display="none";
+.controller('VerCtrl', function($scope,$rootScope,$location,$ionicScrollDelegate) {
+ document.getElementById("btncontinuar").style.display="none";
  document.getElementById("btnterminar").style.display="none";
- document.getElementById("btnrepasar").style.display="none";
-
-   var msg = 1;
+ 
+ 
+ var msg = 1;
  if (msg = 1) {
   document.getElementById("msgfinal").style.display="none";
   document.getElementById("msginicial").style.display="inline";
@@ -77,8 +13,10 @@ c= 0;
   document.getElementById("msgfinal").style.display="inline";
   document.getElementById("msginicial").style.display="none";
  }
-var num = 0;
-  $scope.examen1 = [
+ var id = $rootScope.id;
+
+ if (id = 1) {
+  $scope.examen = [
     {
       pregunta:"Se conoce como el despliegue, integración y coordinación del hardware, software y los elementos humanos para monitorizar, probar, sondear, configurar, analizar, evaluar y controlar los recursos de la red a:",
       id:1,
@@ -171,11 +109,7 @@ var num = 0;
       ]
     }
   ];
- 
-$scope.examen = [
-    $scope.examen1[num]
-]; 
-console.log($scope.examen);
+ }
 $scope.res=[];
 
  $scope.respuestaChange = function(examen,id) {
@@ -190,7 +124,6 @@ $scope.res=[];
       correcta : examen.respuesta[id].correcta,
       id: examen.respuesta[id].idu
     });
-     // console.log($scope.res);
          
 
     }else{
@@ -208,7 +141,6 @@ $scope.res=[];
           correcta : examen.respuesta[id].correcta,
           id: examen.respuesta[id].idu
            });
-         // console.log($scope.res);
           a=1;
       }
        }
@@ -220,134 +152,111 @@ $scope.res=[];
           correcta : examen.respuesta[id].correcta,
           id: examen.respuesta[id].idu
            });
-
-         //console.log($scope.res);
      
        }
    }
    } 
-var v = 0;
-var f = 0;
-$scope.examen2= [];
-$scope.aceptar = function (){
 
-          if ($scope.res.length == $scope.examen.length) {
+  $scope.aceptar = function (){
 
-            var cod = $scope.res[0].id;
 
-             if ($scope.res[0].correcta == 1 ){
-                v = v + 1;
-               document.getElementById(cod).style.color="green";
-               document.getElementById("btnaceptar").style.display="none";
-                document.getElementById("btncontinuar").style.display="inline";
-             }
-             else
-             {
-              f = f+1;
-               document.getElementById(cod).style.color="red";
-               $scope.examen2.push({
-                 pregunta:$scope.examen[0].pregunta,
-                 id:$scope.examen[0].id,
+
+
+  if ($scope.res.length == $scope.examen.length) {
+    
+
+    if($scope.examen.length == 0)
+  {
+    document.getElementById("btnaceptar").style.display="none";
+    document.getElementById("btnterminar").style.display="inline";
+  }
+  else
+  {
+    console.log($scope.res);
+    //console.log($scope.res);
+    var tam1 = $scope.res.length;
+    var v = 0;
+    var f = 0;
+ $scope.examen1 = [];
+    for (var k = 0; k < tam1 ; k++) {
+
+      if ($scope.res[k].correcta == 1 ) {
+        
+        var cod = $scope.res[k].id;
+        console.log(cod);
+        v = v + 1;
+        document.getElementById(cod).style.color="green";
+
+       
+
+      }
+      else{
+      f = f + 1;
+       var cod = $scope.res[k].id;
+      
+        document.getElementById(cod).style.color="red";
+        var tam2 = $scope.examen.length;
+        for (var j = 0; j < tam2 ; j++) {
+
+            if($scope.res[k].id_pregunta == $scope.examen[j].id ){
+              console.log($scope.examen[j].pregunta);
+              $scope.examen1.push({
+                 pregunta:$scope.examen[j].pregunta,
+                 id:$scope.examen[j].id,
                  respuesta: [
-                    {name:$scope.examen[0].respuesta[0].name,correcta:$scope.examen[0].respuesta[0].correcta ,id:$scope.examen[0].respuesta[0].id,idu:$scope.examen[0].respuesta[0].idu},
-                    {name:$scope.examen[0].respuesta[1].name,correcta:$scope.examen[0].respuesta[1].correcta ,id:$scope.examen[0].respuesta[1].id,idu:$scope.examen[0].respuesta[1].idu},
-                    {name:$scope.examen[0].respuesta[2].name,correcta:$scope.examen[0].respuesta[2].correcta ,id:$scope.examen[0].respuesta[2].id,idu:$scope.examen[0].respuesta[2].idu},
-                    {name:$scope.examen[0].respuesta[3].name,correcta:$scope.examen[0].respuesta[3].correcta ,id:$scope.examen[0].respuesta[3].id,idu:$scope.examen[0].respuesta[3].idu}
+                    {name:$scope.examen[j].respuesta[0].name,correcta:$scope.examen[j].respuesta[0].correcta ,id:$scope.examen[j].respuesta[0].id,idu:$scope.examen[j].respuesta[0].idu},
+                    {name:$scope.examen[j].respuesta[1].name,correcta:$scope.examen[j].respuesta[1].correcta ,id:$scope.examen[j].respuesta[1].id,idu:$scope.examen[j].respuesta[1].idu},
+                    {name:$scope.examen[j].respuesta[2].name,correcta:$scope.examen[j].respuesta[2].correcta ,id:$scope.examen[j].respuesta[2].id,idu:$scope.examen[j].respuesta[2].idu},
+                    {name:$scope.examen[j].respuesta[3].name,correcta:$scope.examen[j].respuesta[3].correcta ,id:$scope.examen[j].respuesta[3].id,idu:$scope.examen[j].respuesta[3].idu}
                   ]
                 });
 
-                document.getElementById("btnaceptar").style.display="none";
-                document.getElementById("btncontinuar").style.display="inline";
+              
+            }
+        }
+      }
+    }
 
-             }
+//console.log($scope.examen1);
+  alert("Usted acerto en "+v+" Preguntas y fallo en "+f+" Preguntas");
 
-
-          }
-          else{
-
-              alert("Aun no a respondido verifique por favor")
-          }
+   document.getElementById("btnaceptar").style.display="none";
+   document.getElementById("btncontinuar").style.display="inline";
+    
+    $rootScope.examen2 = $scope.examen1;
+    console.log($rootScope.examen2);
+    console.log($scope.examen);
+  }
+}
+else{
+  alert("Aun faltan preguntas por resolver, por vavor verifique")
+}
 
 }
 
-  $scope.continuar = function () {
-    //console.log($scope.examen2);
-    num = num + 1;
-    //console.log($scope.examen1.length);
-   // console.log(num);
-    if (num == $scope.examen1.length){
 
+  $scope.continuar = function () {
+
+      $scope.examen = $rootScope.examen2;
+       if($scope.examen.length == 0)
+      {
         document.getElementById("btnaceptar").style.display="none";
         document.getElementById("btnterminar").style.display="inline";
         document.getElementById("btncontinuar").style.display="none";
-        document.getElementById("btnrepasar").style.display="inline";
         document.getElementById("msgfinal").style.display="inline";
         document.getElementById("msginicial").style.display="none";
-        document.getElementById("pregun").style.display="none";
-
-        if (c == 0)
-        {
-          v = (v*100)/$scope.examen1.length;
-          f = (f*100)/$scope.examen1.length;
-          alert("Usted acerto en "+v+"% Preguntas y fallo en "+f+"% Preguntas");
-          c = 1;
-          v = 0;
-          f = 0;
-        }
-        else
-        {
-          v = (v*100)/$scope.examen1.length;
-          f = (f*100)/$scope.examen1.length;
-          alert("Usted en su repaso acerto en el "+v+"% Preguntas y fallo en "+f+"% Preguntas");
-          c = 1;
-          v = 0;
-          f = 0;
-        }
-
-    }
-    else
-    {
+     }
+     else
+     {
       $scope.res=[];
       document.getElementById("btnaceptar").style.display="inline";
       document.getElementById("btncontinuar").style.display="none";
       document.getElementById("btnterminar").style.display="none";
-      $scope.examen = [];
-      $scope.examen = [
-        $scope.examen1[num]
-      ]; 
-      $ionicScrollDelegate.$getByHandle('mainScroll').scrollTop();
     }
-  }
 
-  $scope.repasar = function (){
+    //s$ionicScrollDelegate.$getByHandle('mainScroll').scrollBottom();
+    $ionicScrollDelegate.$getByHandle('mainScroll').scrollTop();
 
-
-    if ($scope.examen2.length == 0){
-
-        alert("No hay respuestas incorrectas por repasar, gracias por participar");
-        $location.path( "tab/encuestas" );
-
-    }
-    else
-    {
-        document.getElementById("btnaceptar").style.display="inline";
-        document.getElementById("btnterminar").style.display="none";
-        document.getElementById("btncontinuar").style.display="none";
-        document.getElementById("btnrepasar").style.display="none";
-        document.getElementById("msgfinal").style.display="none";
-        document.getElementById("msginicial").style.display="inline";
-        document.getElementById("pregun").style.display="inline";
-    $scope.examen1 = [];
-    $scope.examen1 = $scope.examen2;
-    num = 0;
-    $scope.examen2 = [];
-     $scope.res = [];
-    $scope.examen = [
-        $scope.examen1[num]
-      ]; 
-      $ionicScrollDelegate.$getByHandle('mainScroll').scrollTop();
-
-    }
   }
 
   $scope.terminar = function () {
@@ -356,5 +265,4 @@ $scope.aceptar = function (){
 
   }
 
-
-});
+})

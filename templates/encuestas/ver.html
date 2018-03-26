@@ -9,11 +9,12 @@
   <div class="item item-body">
     <img class="full-image" src="img/final.png">
     <p>
-      Muchas gracias por responder este examen, espero le haya servido para prender nuevos conceptos acerca del tema que selecciono para resolver, esto a sido todo.
+      Muchas gracias por responder este examen, espero le haya servido para prender nuevos conceptos acerca del tema que selecciono para resolver, si desea repasar las preguntas incorrectas haga click en repasar de lo contrario en continuar.
     </p>
   </div>
 
 </div>
+
 
 <div class="card" style="padding-right: 10px;
     margin-top: 0px;
@@ -22,12 +23,11 @@
     Lea atentamente cada pregunta y marque la respuesta que considere correcta
   </div>
 </div>
-<div ng-repeat="examen in examen">
+<div ng-repeat="examen in examen" id="pregun">
     
     <div class="item item-text-wrap"  style="background-color:#0288D1 !important;color: white !important">
     {{examen.pregunta}}
    </div>
-
 
     <ion-radio ng-repeat="item in examen.respuesta"
                    ng-value="item.correcta"
@@ -42,6 +42,7 @@
 </div>
 <button ng-click="aceptar()" class="button button-full button-positive" id="btnaceptar" >Aceptar</button>
 <button ng-click="continuar()" class="button button-full button-positive" id="btncontinuar" >Continuar</button>
+<button ng-click="repasar()" class="button button-full button-positive" id="btnrepasar" >Repasar</button>
 <button ng-click="terminar()" class="button button-full button-positive" id="btnterminar" >Terminar</button>
 
 
