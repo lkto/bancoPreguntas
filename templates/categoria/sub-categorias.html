@@ -1,17 +1,17 @@
-<ion-view view-title="Encuestas">
+<ion-view view-title="SubCategorias">
 	<ion-nav-bar class="bar-stable">
 	<ion-nav-buttons side="left" >            
-              <a class="button button-icon button-clear back_btn" href="#/subcategorias"> 
+              <a class="button button-icon button-clear back_btn" href="#/tab/categorias"> 
                 <i class="icon ion-android-arrow-back"></i>
             </a>
     </ion-nav-buttons>
 </ion-nav-bar>
   <ion-content class="padding" style="background-color:#F5F5F5 !important;">
    <ul class="list">
-    <li class="item" ng-repeat="encuestas in encuestas" ng-click="verEncuesta(encuestas.id)" style="
+    <li class="item" ng-repeat="subcategorias in subcategorias" ng-click="aceptar(subcategorias.id)" style="
     background-color: transparent;">
-     {{encuestas.nombre}}
+     {{subcategorias.nombre}}
     </li>
 </ul>
   </ion-content>
-</ion-view>
+</ion-view>s

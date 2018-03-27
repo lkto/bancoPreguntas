@@ -46,6 +46,13 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
     controller: 'CategoriasCtrl'
   })
 
+  .state('subcategorias', {
+      cache: false,
+    url: '/subcategorias',
+    templateUrl: 'templates/categoria/sub-categorias.html',
+    controller: 'subcategoriasCtrl'
+  })
+
   // Each tab has its own nav history stack:
 
 

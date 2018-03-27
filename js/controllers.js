@@ -33,11 +33,23 @@ angular.module('starter.controllers', [])
 
     $rootScope.idC = document.getElementById("categoria").value;
     //console.log($rootScope.idC);
-    $location.path( "tab/encuestas" );
+    $location.path( "subcategorias" );
   }
 })
 
+.controller('subcategoriasCtrl', function($scope,$location,$rootScope) {
 
+  $scope.subcategorias=[
+    {id:1, nombre: "Examens de gestion de redes"}
+  ];
+
+  $scope.aceptar= function (id) {
+
+    $rootScope.idC = id;
+    //console.log($rootScope.idC);
+    $location.path( "tab/encuestas" );
+  }
+})
 
 .controller('EncuestasCtrl', function($scope,$rootScope,$location) {
  
@@ -62,6 +74,7 @@ angular.module('starter.controllers', [])
 })
 .controller('VerCtrl', function($scope,$ionicScrollDelegate,$location) {
 
+document.getElementById("repaso").style.display="none";
 c= 0;
    document.getElementById("btncontinuar").style.display="none";
  document.getElementById("btnterminar").style.display="none";
@@ -302,6 +315,37 @@ $scope.aceptar = function (){
           c = 1;
           v = 0;
           f = 0;
+          if ($scope.examen2.length == 0) {
+            document.getElementById("repaso").style.display="inline";
+            document.getElementById("btnaceptar").style.display="none";
+          document.getElementById("btnterminar").style.display="inline";
+          document.getElementById("btncontinuar").style.display="none";
+          document.getElementById("btnrepasar").style.display="none";
+          document.getElementById("msgfinal").style.display="none";
+          document.getElementById("msginicial").style.display="none";
+          document.getElementById("pregun").style.display="none";
+          }
+          else
+          {
+          document.getElementById("btnaceptar").style.display="inline";
+          document.getElementById("btnterminar").style.display="none";
+          document.getElementById("btncontinuar").style.display="none";
+          document.getElementById("btnrepasar").style.display="none";
+          document.getElementById("msgfinal").style.display="none";
+          document.getElementById("msginicial").style.display="inline";
+          document.getElementById("pregun").style.display="inline";
+          $scope.examen1 = [];
+          $scope.examen1 = $scope.examen2;
+          num = 0;
+          $scope.examen2 = [];
+          $scope.res = [];
+          $scope.examen = [
+           $scope.examen1[num]
+          ]; 
+           $ionicScrollDelegate.$getByHandle('mainScroll').scrollTop();
+          }
+          
+
         }
 
     }
@@ -319,6 +363,7 @@ $scope.aceptar = function (){
     }
   }
 
+var r = 1;
   $scope.repasar = function (){
 
 
@@ -330,6 +375,7 @@ $scope.aceptar = function (){
     }
     else
     {
+      var r = 2;
         document.getElementById("btnaceptar").style.display="inline";
         document.getElementById("btnterminar").style.display="none";
         document.getElementById("btncontinuar").style.display="none";
